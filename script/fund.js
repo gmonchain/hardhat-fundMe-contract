@@ -12,8 +12,9 @@ async function main() {
     deployer
   );
   console.log("Funding Contract...");
+  // Fund with an amount between MINIMUM_FUND_AMOUNT (0.01 ether) and MAXIMUM_FUND_AMOUNT (10 ether)
   const transactionResponse = await fundMe.fund({
-    value: ethers.parseEther("0.1"),
+    value: ethers.parseEther("0.5"), // Changed from 0.1 to 0.5 for demonstration
   });
   await transactionResponse.wait(1);
   console.log("Funded!");

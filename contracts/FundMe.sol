@@ -26,6 +26,8 @@ contract FundMe {
     address[] private s_funders;
     address private i_owner;
     uint256 public constant MINIMUM_USD = 50 * 10 ** 18;
+    uint256 public constant MINIMUM_FUND_AMOUNT = 0.01 ether; // Example: 0.01 ETH
+    uint256 public constant MAXIMUM_FUND_AMOUNT = 10 ether; // Example: 10 ETH
     AggregatorV3Interface private s_priceFeed;
 
     // Modifiers
@@ -63,6 +65,8 @@ contract FundMe {
             msg.value.getConversionRate(s_priceFeed) >= MINIMUM_USD,
             "You need to spend more ETH!"
         );
+        require(msg.value >= MINIMUM_FUND_AMOUNT, "Fund amount is too low!");
+        require(msg.value <= MAXIMUM_FUND_AMOUNT, "Fund amount is too high!");
         // require(PriceConverter.getConversionRate(msg.value) >= MINIMUM_USD, "You need to spend more ETH!");
         s_addressToAmountFunded[msg.sender] += msg.value;
         s_funders.push(msg.sender);
